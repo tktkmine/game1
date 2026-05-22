@@ -19,7 +19,21 @@ const enemyNames = [
 "ドラゴン"
 ];
 
+const eventPool = [
+"growth",
+"rest",
+"gather",
+"growth",
+"rest",
+"gather",
+"time"
+];
+
 showMenu();
+
+/* =========================
+SCENE
+========================= */
 
 function showMenu(){
 
@@ -34,6 +48,10 @@ menuScene.style.display = "none";
 
 gameScene.style.display = "flex";
 }
+
+/* =========================
+START
+========================= */
 
 function startGame(){
 
@@ -85,6 +103,10 @@ function returnToMenu(){
 showMenu();
 }
 
+/* =========================
+ITEM
+========================= */
+
 function toggleItems(){
 
 const area =
@@ -115,12 +137,22 @@ function closeItemArea(){
 document.getElementById("itemArea")
 .style.display = "none";
 
+if(enemy &&
+enemy.hp > 0 &&
+player &&
+player.hp > 0){
+
 document.getElementById("attackBtn")
 .style.display = "block";
 
 document.getElementById("itemBtn")
 .style.display = "block";
 }
+}
+
+/* =========================
+ENEMY
+========================= */
 
 function createEnemy(){
 
@@ -138,13 +170,34 @@ maxHp:20 + floor * 5,
 hp:20 + floor * 5,
 
 atk:3 + floor,
-def:Math.floor(floor/5),
-crit:5 + Math.floor(floor/3)
+
+def:Math.floor(floor / 5),
+
+crit:5 + Math.floor(floor / 3)
 };
 
+if(floor === 30){
+
+enemy.name = "魔王";
+
+enemy.maxHp = 250;
+enemy.hp = 250;
+
+enemy.atk = 35;
+
+enemy.def = 8;
+
+enemy.crit = 35;
+}
+
 updateUI();
+
 drawSprites();
 }
+
+/* =========================
+UI
+========================= */
 
 function updateUI(){
 
@@ -182,6 +235,10 @@ document.getElementById("inventory")
 `;
 }
 
+/* =========================
+ATTACK
+========================= */
+
 function attack(){
 
 let damage =
@@ -189,6 +246,14 @@ Math.max(
 1,
 player.atk - enemy.def
 );
+
+let crit =
+Math.random() * 100
+< player.crit;
+
+if(crit){
+damage *= 2;
+}
 
 enemy.hp -= damage;
 
@@ -198,19 +263,33 @@ enemy.hp = 0;
 
 updateUI();
 
-showChoices();
-
 document.getElementById("log")
 .innerHTML =
-`${enemy.name}撃破`;
+`
+${enemy.name}撃破<br>
+${damage}ダメージ
+`;
+
+showChoices();
 
 return;
 }
 
-player.hp -= Math.max(
+let enemyDamage =
+Math.max(
 1,
 enemy.atk - player.def
 );
+
+let enemyCrit =
+Math.random() * 100
+< enemy.crit;
+
+if(enemyCrit){
+enemyDamage *= 2;
+}
+
+player.hp -= enemyDamage;
 
 if(player.hp <= 0){
 
@@ -222,6 +301,12 @@ document.getElementById("log")
 .innerHTML =
 "GAME OVER";
 
+document.getElementById("attackBtn")
+.style.display = "none";
+
+document.getElementById("itemBtn")
+.style.display = "none";
+
 document.getElementById("resultArea")
 .style.display = "block";
 
@@ -230,10 +315,28 @@ return;
 
 updateUI();
 
-document.getElementById("log")
-.innerHTML =
+let log =
 `${damage}ダメージ`;
+
+if(crit){
+log += "<br>クリティカル！";
 }
+
+log +=
+`<br>${enemyDamage}ダメージ受けた`;
+
+if(enemyCrit){
+log +=
+"<br>敵クリティカル！";
+}
+
+document.getElementById("log")
+.innerHTML = log;
+}
+
+/* =========================
+ITEM USE
+========================= */
 
 function usePotion(){
 
@@ -290,26 +393,235 @@ closeItemArea();
 
 document.getElementById("log")
 .innerHTML =
-"爆薬使用";
+"爆薬使用 20ダメージ";
+
+if(enemy.hp <= 0){
+
+showChoices();
 }
+}
+
+/* =========================
+CHOICE
+========================= */
 
 function showChoices(){
 
 const area =
 document.getElementById("choiceArea");
 
+area.innerHTML = "";
+
+document.getElementById("attackBtn")
+.style.display = "none";
+
+document.getElementById("itemBtn")
+.style.display = "none";
+
+if(currentChoices.length === 0){
+
+while(currentChoices.length < 2){
+
+let random =
+eventPool[
+Math.floor(
+Math.random()
+* eventPool.length
+)
+];
+
+if(!currentChoices.includes(random)){
+
+currentChoices.push(random);
+}
+}
+}
+
+currentChoices.forEach(choice => {
+
+let btn =
+document.createElement("button");
+
+if(choice === "growth"){
+
+btn.innerText = "成長";
+
+btn.onclick =
+growthEvent;
+}
+
+if(choice === "rest"){
+
+btn.innerText = "休息";
+
+btn.onclick =
+restEvent;
+}
+
+if(choice === "gather"){
+
+btn.innerText = "採取";
+
+btn.onclick =
+gatherEvent;
+}
+
+if(choice === "time"){
+
+btn.innerText = "時巡り";
+
+btn.onclick =
+timeEvent;
+}
+
+area.appendChild(btn);
+});
+
 area.style.display =
 "block";
+}
+
+/* =========================
+GROWTH
+========================= */
+
+function growthEvent(){
+
+const area =
+document.getElementById("choiceArea");
 
 area.innerHTML =
 `
-<button onclick="nextFloor()">
-次へ進む
+<button onclick="upgrade('atk')">
+攻撃+2
+</button>
+
+<button onclick="upgrade('hp')">
+HP+10
+</button>
+
+<button onclick="upgrade('crit')">
+CRT+10%
+</button>
+
+<button onclick="showChoices()">
+戻る
 </button>
 `;
 }
 
-function nextFloor(){
+function upgrade(type){
+
+if(type === "atk"){
+player.atk += 2;
+}
+
+if(type === "hp"){
+
+player.maxHp += 10;
+player.hp += 10;
+}
+
+if(type === "crit"){
+player.crit += 10;
+}
+
+nextFloor("能力強化");
+}
+
+/* =========================
+REST
+========================= */
+
+function restEvent(){
+
+let heal =
+Math.floor(
+player.maxHp * 0.8
+);
+
+player.hp += heal;
+
+if(player.hp > player.maxHp){
+
+player.hp =
+player.maxHp;
+}
+
+nextFloor(
+`休息 HP+${heal}`
+);
+}
+
+/* =========================
+GATHER
+========================= */
+
+function gatherEvent(){
+
+let rand =
+Math.random();
+
+let text = "";
+
+if(rand < 0.5){
+
+inventory.potion++;
+
+text =
+"回復薬発見";
+}
+else{
+
+inventory.bomb++;
+
+text =
+"爆薬発見";
+}
+
+nextFloor(text);
+}
+
+/* =========================
+TIME
+========================= */
+
+function timeEvent(){
+
+floor -= 5;
+
+if(floor < 1){
+floor = 1;
+}
+
+player.hp =
+player.maxHp;
+
+currentChoices = [];
+
+document.getElementById("choiceArea")
+.style.display = "none";
+
+document.getElementById("attackBtn")
+.style.display = "block";
+
+document.getElementById("itemBtn")
+.style.display = "block";
+
+createEnemy();
+
+updateUI();
+
+document.getElementById("log")
+.innerHTML =
+"時が巻き戻る";
+}
+
+/* =========================
+NEXT FLOOR
+========================= */
+
+function nextFloor(message){
 
 currentChoices = [];
 
@@ -318,10 +630,24 @@ floor++;
 document.getElementById("choiceArea")
 .style.display = "none";
 
+document.getElementById("attackBtn")
+.style.display = "block";
+
+document.getElementById("itemBtn")
+.style.display = "block";
+
 createEnemy();
 
 updateUI();
+
+document.getElementById("log")
+.innerHTML =
+message;
 }
+
+/* =========================
+SPRITE
+========================= */
 
 function drawSprites(){
 
@@ -341,6 +667,16 @@ width="24"
 height="20"
 fill="#ffcc99"/>
 
+<rect x="26" y="20"
+width="4"
+height="4"
+fill="#000"/>
+
+<rect x="36" y="20"
+width="4"
+height="4"
+fill="#000"/>
+
 <rect x="18" y="32"
 width="28"
 height="24"
@@ -351,6 +687,28 @@ fill="#2244aa"/>
 </div>
 `;
 
+let color = "#33cc33";
+
+if(enemy.name === "ゴブリン"){
+color = "#88cc22";
+}
+
+if(enemy.name === "オーク"){
+color = "#559933";
+}
+
+if(enemy.name === "骸骨兵"){
+color = "#dddddd";
+}
+
+if(enemy.name === "ドラゴン"){
+color = "#cc3333";
+}
+
+if(enemy.name === "魔王"){
+color = "#9933cc";
+}
+
 document.getElementById("enemySprite")
 .innerHTML = `
 <div class="sprite">
@@ -360,12 +718,22 @@ document.getElementById("enemySprite")
 <rect x="18" y="10"
 width="28"
 height="18"
-fill="#33cc33"/>
+fill="${color}"/>
+
+<rect x="24" y="18"
+width="4"
+height="4"
+fill="#fff"/>
+
+<rect x="36" y="18"
+width="4"
+height="4"
+fill="#fff"/>
 
 <rect x="16" y="30"
 width="32"
 height="22"
-fill="#33cc33"/>
+fill="${color}"/>
 
 </svg>
 
