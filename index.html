@@ -10,9 +10,10 @@ content="width=device-width,
 initial-scale=1.0,
 user-scalable=no">
 
-<title>30階層の魔王 Ver2.2</title>
+<title>30階層の魔王 Ver2.3</title>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet"
+href="style.css">
 
 </head>
 
@@ -20,17 +21,22 @@ user-scalable=no">
 
 <!-- MENU -->
 
-<div id="menuScene" class="scene">
+<div id="menuScene"
+class="scene">
 
 <div class="menu-box">
 
 <div class="menu-title">
+
 30階層の魔王
+
 </div>
 
 <p>
+
 勇者は30階層に潜む<br>
 魔王討伐を目指す。
+
 </p>
 
 <button class="menu-btn"
@@ -41,11 +47,15 @@ onclick="startGame()">
 </button>
 
 <button onclick="openHelp()">
+
 ヘルプ / 図鑑
+
 </button>
 
 <div class="version">
-Ver2.2
+
+Ver2.3
+
 </div>
 
 </div>
@@ -54,15 +64,20 @@ Ver2.2
 
 <!-- HELP -->
 
-<div id="helpScene" class="scene">
+<div id="helpScene"
+class="scene">
 
 <div class="panel help-panel">
 
-<h2>ヘルプ / 図鑑</h2>
+<h2>
+ヘルプ / 図鑑
+</h2>
 
 <div class="help-scroll">
 
-<h3>■ 行動説明</h3>
+<h3>
+■ 行動説明
+</h3>
 
 <p>
 【成長】<br>
@@ -76,7 +91,7 @@ Ver2.2
 
 <p>
 【採取】<br>
-アイテムを発見する
+アイテムや装備を発見
 </p>
 
 <p>
@@ -84,7 +99,9 @@ Ver2.2
 5階層戻る代わりにHP全快
 </p>
 
-<h3>■ アイテム図鑑</h3>
+<h3>
+■ アイテム図鑑
+</h3>
 
 <p>
 回復薬<br>
@@ -96,46 +113,30 @@ HPを20回復
 敵へ20ダメージ
 </p>
 
-<h3>■ 武器図鑑</h3>
+<h3>
+■ 武器図鑑
+</h3>
 
-<p>
-木の剣 ATK+1
-</p>
+<p>木の剣 ATK+1</p>
+<p>鉄の剣 ATK+2</p>
+<p>鋼の剣 ATK+3</p>
+<p>伝説の剣 ATK+4</p>
 
-<p>
-鉄の剣 ATK+2
-</p>
+<h3>
+■ 防具図鑑
+</h3>
 
-<p>
-鋼の剣 ATK+3
-</p>
-
-<p>
-伝説の剣 ATK+4
-</p>
-
-<h3>■ 防具図鑑</h3>
-
-<p>
-木の鎧 DEF+1
-</p>
-
-<p>
-鉄の鎧 DEF+2
-</p>
-
-<p>
-鋼の鎧 DEF+3
-</p>
-
-<p>
-伝説の鎧 DEF+4
-</p>
+<p>木の鎧 DEF+1</p>
+<p>鉄の鎧 DEF+2</p>
+<p>鋼の鎧 DEF+3</p>
+<p>伝説の鎧 DEF+4</p>
 
 </div>
 
 <button onclick="closeHelp()">
+
 戻る
+
 </button>
 
 </div>
@@ -144,12 +145,15 @@ HPを20回復
 
 <!-- GAME -->
 
-<div id="gameScene" class="scene">
+<div id="gameScene"
+class="scene">
 
 <div class="panel topbar">
 
 <div id="floor">
+
 1階層
+
 </div>
 
 <button class="help-btn"
@@ -212,6 +216,19 @@ id="enemyName">
 </div>
 
 <div class="panel info-area">
+
+<div class="info-box">
+
+⚔ 装備
+
+<div id="equipment">
+
+武器：なし<br>
+防具：なし
+
+</div>
+
+</div>
 
 <div class="info-box">
 
