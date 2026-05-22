@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>じゃんけん勝負</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background: #1e1e1e;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-size: 2rem;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    button {
+      flex: 1;
+      padding: 20px 10px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 15px;
+      background: #333;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    .result {
+      font-size: 1.3rem;
+      line-height: 1.8;
+      min-height: 120px;
+    }
+
+    .restart {
+      margin-top: 20px;
+      display: none;
+      background: #4caf50;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>じゃんけん勝負</h1>
+
+    <div class="buttons">
+      <button onclick="play('グー')">✊ グー</button>
+      <button onclick="play('チョキ')">✌️ チョキ</button>
+      <button onclick="play('パー')">✋ パー</button>
+    </div>
+
+    <div class="result" id="result">
+      手を選べ。
+    </div>
+
+    <button class="restart" id="restartBtn" onclick="restartGame()">
+      もう一回
+    </button>
+  </div>
+
+  <script>
+    const hands = ['グー', 'チョキ', 'パー'];
+
+    function play(playerHand) {
+      const cpuHand = hands[Math.floor(Math.random() * 3)];
+
+      let result = '';
+
+      if (playerHand === cpuHand) {
+        result = '引き分け';
+      } else if (
+        (playerHand === 'グー' && cpuHand === 'チョキ') ||
+        (playerHand === 'チョキ' && cpuHand === 'パー') ||
+        (playerHand === 'パー' && cpuHand === 'グー')
+      ) {
+        result = '勝利';
+      } else {
+        result = '敗北';
+      }
+
+      document.getElementById('result').innerHTML = `
+        あなた：${playerHand}<br>
+        相手：${cpuHand}<br><br>
+        <strong>${result}</strong>
+      `;
+
+      // 1回勝負なのでボタン無効化
+      const buttons = document.querySelectorAll('.buttons button');
+      buttons.forEach(btn => btn.disabled = true);
+
+      document.getElementById('restartBtn').style.display = 'block';
+    }
+
+    function restartGame() {
+      location.reload();
+    }
+  </script>
+
+</body>
+</html>
