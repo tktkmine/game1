@@ -2,83 +2,159 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-<title>30階層の魔王 Ver0.9</title>
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+user-scalable=no">
+
+<title>30階層の魔王 Ver1.0</title>
 
 <style>
 
 *{
     box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
 }
 
+html,
 body{
+
     margin:0;
+    padding:0;
+
+    width:100%;
+    height:100%;
+
+    overflow:hidden;
+
     background:#111;
+
     color:white;
+
     font-family:sans-serif;
+}
+
+/* =========================
+   共通
+========================= */
+
+button{
+
+    width:100%;
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:14px;
+
+    margin-top:8px;
+
+    font-size:18px;
+
+    color:white;
+
+    background:#444;
+}
+
+button:active{
+    transform:scale(0.98);
+}
+
+.panel{
+
+    background:#222;
+
+    border-radius:10px;
+
+    padding:8px;
+}
+
+/* =========================
+   シーン
+========================= */
+
+.scene{
+
+    width:100%;
+
+    height:100%;
+
+    display:none;
+
+    overflow:hidden;
 }
 
 /* =========================
    MENU
 ========================= */
 
-#menuScreen{
-    width:100vw;
-    height:100vh;
+#menuScene{
 
     display:flex;
-    flex-direction:column;
+
     justify-content:center;
+
     align-items:center;
 
     padding:20px;
 }
 
 .menu-box{
+
     width:100%;
-    max-width:400px;
+
+    max-width:380px;
 
     background:#222;
 
-    padding:20px;
-
     border-radius:12px;
 
+    padding:24px;
+
     text-align:center;
+}
+
+.menu-title{
+
+    font-size:34px;
+
+    margin-bottom:20px;
+}
+
+.menu-btn{
+
+    background:#6a1b9a;
 }
 
 /* =========================
    GAME
 ========================= */
 
-#gameScreen{
+#gameScene{
 
-    width:100vw;
-    height:100vh;
-
-    display:none;
     flex-direction:column;
 
-    overflow:hidden;
-
-    padding:8px;
-
     max-width:480px;
+
     margin:auto;
+
+    padding:8px;
+
+    gap:8px;
 }
 
-.panel{
-    background:#222;
-    border-radius:10px;
-    padding:8px;
-    margin-bottom:8px;
-}
+/* =========================
+   TOP
+========================= */
 
 .topbar{
+
     text-align:center;
+
     font-size:22px;
+
     font-weight:bold;
 }
 
@@ -92,9 +168,7 @@ body{
 
     justify-content:space-between;
 
-    align-items:flex-start;
-
-    gap:10px;
+    gap:8px;
 }
 
 .character-box{
@@ -120,15 +194,17 @@ body{
 
     padding:6px;
 
-    font-size:14px;
+    margin-top:6px;
 
     line-height:1.5;
 
-    margin-top:6px;
+    font-size:14px;
 }
 
 .enemy-name{
+
     font-size:20px;
+
     margin-bottom:4px;
 }
 
@@ -136,17 +212,14 @@ body{
    EQUIPMENT
 ========================= */
 
-.equipment-box{
+.info-area{
 
     display:flex;
-
-    justify-content:space-between;
 
     gap:8px;
 }
 
-.equipment,
-.inventory{
+.info-box{
 
     flex:1;
 
@@ -155,6 +228,8 @@ body{
     border-radius:8px;
 
     padding:8px;
+
+    font-size:14px;
 }
 
 /* =========================
@@ -163,15 +238,15 @@ body{
 
 .inventory-list{
 
-    max-height:80px;
+    margin-top:6px;
+
+    max-height:90px;
 
     overflow-y:auto;
 
-    margin-top:6px;
-
     text-align:left;
 
-    font-size:14px;
+    line-height:1.5;
 }
 
 /* =========================
@@ -180,7 +255,7 @@ body{
 
 .log{
 
-    height:70px;
+    height:72px;
 
     overflow:hidden;
 
@@ -190,39 +265,12 @@ body{
 }
 
 /* =========================
-   BUTTON
+   BUTTONS
 ========================= */
 
-.bottom-buttons{
+.bottom-area{
 
     margin-top:auto;
-}
-
-button{
-
-    width:100%;
-
-    padding:14px;
-
-    border:none;
-
-    border-radius:10px;
-
-    background:#444;
-
-    color:white;
-
-    font-size:18px;
-
-    margin-top:8px;
-}
-
-button:active{
-    transform:scale(0.98);
-}
-
-.menu-btn{
-    background:#6a1b9a;
 }
 
 .item-btn{
@@ -239,14 +287,16 @@ button:active{
 <body>
 
 <!-- =========================
-     MENU
+     MENU SCENE
 ========================= -->
 
-<div id="menuScreen">
+<div id="menuScene" class="scene">
 
 <div class="menu-box">
 
-<h1>30階層の魔王</h1>
+<div class="menu-title">
+30階層の魔王
+</div>
 
 <p>
 勇者は30階層に潜む<br>
@@ -265,14 +315,18 @@ onclick="startGame()">
 </div>
 
 <!-- =========================
-     GAME
+     GAME SCENE
 ========================= -->
 
-<div id="gameScreen">
+<div id="gameScene" class="scene">
+
+<!-- FLOOR -->
 
 <div class="panel topbar">
 
-<div id="floor">1階層</div>
+<div id="floor">
+1階層
+</div>
 
 </div>
 
@@ -286,7 +340,9 @@ onclick="startGame()">
 
 <div id="playerSprite"></div>
 
-<div class="status-mini" id="playerStats"></div>
+<div class="status-mini"
+id="playerStats">
+</div>
 
 </div>
 
@@ -299,7 +355,8 @@ onclick="startGame()">
 <div class="status-mini">
 
 <div class="enemy-name"
-id="enemyName"></div>
+id="enemyName">
+</div>
 
 <div id="enemyStats"></div>
 
@@ -309,11 +366,13 @@ id="enemyName"></div>
 
 </div>
 
-<!-- EQUIPMENT -->
+<!-- INFO -->
 
-<div class="panel equipment-box">
+<div class="panel info-area">
 
-<div class="equipment">
+<!-- EQUIP -->
+
+<div class="info-box">
 
 ⚔ 装備<br><br>
 
@@ -321,12 +380,15 @@ id="enemyName"></div>
 
 </div>
 
-<div class="inventory">
+<!-- INVENTORY -->
+
+<div class="info-box">
 
 🎒 アイテム
 
 <div class="inventory-list"
-id="inventory"></div>
+id="inventory">
+</div>
 
 </div>
 
@@ -334,7 +396,8 @@ id="inventory"></div>
 
 <!-- LOG -->
 
-<div class="panel log" id="log">
+<div class="panel log"
+id="log">
 
 ダンジョンへ潜入した。
 
@@ -342,7 +405,7 @@ id="inventory"></div>
 
 <!-- BUTTON -->
 
-<div class="bottom-buttons">
+<div class="bottom-area">
 
 <button id="attackBtn"
 onclick="attack()">
@@ -395,10 +458,28 @@ onclick="returnToMenu()">
 
 <script>
 
+/* =========================
+   シーン
+========================= */
+
+const menuScene =
+document.getElementById("menuScene");
+
+const gameScene =
+document.getElementById("gameScene");
+
+/* =========================
+   ゲーム変数
+========================= */
+
 let floor;
 let player;
 let inventory;
 let enemy;
+
+/* =========================
+   データ
+========================= */
 
 const enemyNames = [
 "スライム",
@@ -432,593 +513,741 @@ const eventPool = [
 "time"
 ];
 
+/* =========================
+   初期表示
+========================= */
+
+showMenu();
+
+/* =========================
+   シーン切替
+========================= */
+
+function showMenu(){
+
+    menuScene.style.display = "flex";
+
+    gameScene.style.display = "none";
+}
+
+function showGame(){
+
+    menuScene.style.display = "none";
+
+    gameScene.style.display = "flex";
+}
+
+/* =========================
+   GAME START
+========================= */
+
 function startGame(){
 
-floor = 1;
+    floor = 1;
 
-player = {
+    player = {
 
-maxHp:30,
-hp:30,
+        maxHp:30,
+        hp:30,
 
-atk:10,
-def:0,
-crit:10,
+        atk:10,
+        def:0,
+        crit:10,
 
-weapon:{
-name:"なし",
-power:0
-},
+        weapon:{
+            name:"なし",
+            power:0
+        },
 
-armor:{
-name:"なし",
-power:0
+        armor:{
+            name:"なし",
+            power:0
+        }
+    };
+
+    inventory = {
+
+        potion:1,
+        bomb:1
+    };
+
+    document.getElementById("resultArea")
+    .style.display = "none";
+
+    document.getElementById("attackBtn")
+    .style.display = "block";
+
+    document.getElementById("itemBtn")
+    .style.display = "block";
+
+    closeItemArea();
+
+    createEnemy();
+
+    document.getElementById("log")
+    .innerHTML =
+    "ダンジョンへ潜入した。";
+
+    showGame();
 }
 
-};
-
-inventory = {
-
-potion:1,
-bomb:1
-
-};
-
-document.getElementById("menuScreen")
-.style.display = "none";
-
-document.getElementById("gameScreen")
-.style.display = "flex";
-
-createEnemy();
-
-document.getElementById("log").innerHTML =
-"ダンジョンへ潜入した。";
-}
+/* =========================
+   MENU RETURN
+========================= */
 
 function returnToMenu(){
 
-document.getElementById("gameScreen")
-.style.display = "none";
+    showMenu();
+}
 
-document.getElementById("menuScreen")
-.style.display = "flex";
+/* =========================
+   ITEM AREA
+========================= */
+
+function toggleItems(){
+
+    const area =
+    document.getElementById("itemArea");
+
+    if(area.style.display === "none"){
+
+        area.style.display = "block";
+    }
+    else{
+
+        area.style.display = "none";
+    }
 }
 
 function closeItemArea(){
 
-document.getElementById("itemArea")
-.style.display = "none";
+    document.getElementById("itemArea")
+    .style.display = "none";
 }
+
+/* =========================
+   ENEMY
+========================= */
 
 function createEnemy(){
 
-let name = floor === 30
-? "魔王"
-: enemyNames[
-Math.floor(
-Math.random()*enemyNames.length
-)
-];
+    let name =
+    floor === 30
+    ? "魔王"
+    : enemyNames[
+        Math.floor(
+        Math.random()
+        * enemyNames.length
+        )
+    ];
 
-enemy = {
+    enemy = {
 
-name:name,
+        name:name,
 
-maxHp:15 + floor * 4,
-hp:15 + floor * 4,
+        maxHp:15 + floor * 4,
+        hp:15 + floor * 4,
 
-atk:3 + floor,
+        atk:3 + floor,
 
-def:Math.floor(floor / 5),
+        def:Math.floor(floor / 5),
 
-crit:5 + Math.floor(floor / 3)
+        crit:5 + Math.floor(floor / 3)
+    };
 
-};
+    if(floor === 30){
 
-if(floor === 30){
+        enemy.maxHp = 250;
+        enemy.hp = 250;
 
-enemy.maxHp = 250;
-enemy.hp = 250;
+        enemy.atk = 35;
 
-enemy.atk = 35;
+        enemy.def = 8;
 
-enemy.def = 8;
+        enemy.crit = 35;
+    }
 
-enemy.crit = 35;
+    drawSprites();
+
+    updateUI();
 }
 
-drawSprites();
-
-updateUI();
-}
+/* =========================
+   UI
+========================= */
 
 function updateUI(){
 
-document.getElementById("floor")
-.innerText = floor + "階層";
+    document.getElementById("floor")
+    .innerText =
+    floor + "階層";
 
-document.getElementById("playerStats")
-.innerHTML = `
-HP ${player.hp}/${player.maxHp}<br>
-ATK ${player.atk}<br>
-DEF ${player.def}<br>
-CRT ${player.crit}%
-`;
+    document.getElementById("playerStats")
+    .innerHTML =
+    `
+    HP ${player.hp}/${player.maxHp}<br>
+    ATK ${player.atk}<br>
+    DEF ${player.def}<br>
+    CRT ${player.crit}%
+    `;
 
-document.getElementById("equipment")
-.innerHTML = `
-⚔ ${player.weapon.name}<br>
-🛡 ${player.armor.name}
-`;
+    document.getElementById("enemyName")
+    .innerText =
+    enemy.name;
 
-document.getElementById("inventory")
-.innerHTML = `
-回復薬 ×${inventory.potion}<br>
-爆薬 ×${inventory.bomb}
-`;
+    document.getElementById("enemyStats")
+    .innerHTML =
+    `
+    HP ${enemy.hp}/${enemy.maxHp}<br>
+    ATK ${enemy.atk}<br>
+    DEF ${enemy.def}<br>
+    CRT ${enemy.crit}%
+    `;
 
-document.getElementById("enemyName")
-.innerText = enemy.name;
+    document.getElementById("equipment")
+    .innerHTML =
+    `
+    ⚔ ${player.weapon.name}<br>
+    🛡 ${player.armor.name}
+    `;
 
-document.getElementById("enemyStats")
-.innerHTML = `
-HP ${enemy.hp}/${enemy.maxHp}<br>
-ATK ${enemy.atk}<br>
-DEF ${enemy.def}<br>
-CRT ${enemy.crit}%
-`;
+    document.getElementById("inventory")
+    .innerHTML =
+    `
+    回復薬 ×${inventory.potion}<br>
+    爆薬 ×${inventory.bomb}
+    `;
 }
+
+/* =========================
+   DAMAGE
+========================= */
 
 function calcDamage(atk, def){
 
-let dmg = atk - def;
+    let dmg = atk - def;
 
-if(dmg < 1){
-dmg = 1;
+    if(dmg < 1){
+        dmg = 1;
+    }
+
+    return dmg;
 }
 
-return dmg;
-}
+/* =========================
+   ATTACK
+========================= */
 
 function attack(){
 
-closeItemArea();
+    closeItemArea();
 
-let crit =
-Math.random()*100 < player.crit;
+    let crit =
+    Math.random()*100
+    < player.crit;
 
-let damage =
-calcDamage(player.atk, enemy.def);
+    let damage =
+    calcDamage(
+    player.atk,
+    enemy.def
+    );
 
-if(crit){
-damage *= 2;
+    if(crit){
+        damage *= 2;
+    }
+
+    enemy.hp -= damage;
+
+    let log =
+    `勇者の攻撃 ${damage}ダメージ`;
+
+    if(crit){
+        log +=
+        "<br>クリティカル！";
+    }
+
+    afterPlayerAction(log);
 }
 
-enemy.hp -= damage;
-
-let log =
-`勇者の攻撃 ${damage}ダメージ`;
-
-if(crit){
-log += "<br>クリティカル！";
-}
-
-afterPlayerAction(log);
-}
+/* =========================
+   ENEMY TURN
+========================= */
 
 function enemyTurn(log){
 
-let crit =
-Math.random()*100 < enemy.crit;
+    let crit =
+    Math.random()*100
+    < enemy.crit;
 
-let damage =
-calcDamage(enemy.atk, player.def);
+    let damage =
+    calcDamage(
+    enemy.atk,
+    player.def
+    );
 
-if(crit){
-damage *= 2;
+    if(crit){
+        damage *= 2;
+    }
+
+    player.hp -= damage;
+
+    log +=
+    `<br>${enemy.name}の攻撃 ${damage}ダメージ`;
+
+    if(crit){
+        log +=
+        "<br>敵クリティカル！";
+    }
+
+    if(player.hp <= 0){
+
+        player.hp = 0;
+
+        updateUI();
+
+        closeItemArea();
+
+        document.getElementById("log")
+        .innerHTML =
+        "GAME OVER";
+
+        document.getElementById("attackBtn")
+        .style.display = "none";
+
+        document.getElementById("itemBtn")
+        .style.display = "none";
+
+        document.getElementById("resultArea")
+        .style.display = "block";
+
+        return;
+    }
+
+    document.getElementById("log")
+    .innerHTML = log;
+
+    updateUI();
 }
 
-player.hp -= damage;
-
-log +=
-`<br>${enemy.name}の攻撃 ${damage}ダメージ`;
-
-if(crit){
-log += "<br>敵クリティカル！";
-}
-
-if(player.hp <= 0){
-
-player.hp = 0;
-
-updateUI();
-
-closeItemArea();
-
-document.getElementById("log")
-.innerHTML =
-"GAME OVER";
-
-document.getElementById("attackBtn")
-.style.display = "none";
-
-document.getElementById("itemBtn")
-.style.display = "none";
-
-document.getElementById("resultArea")
-.style.display = "block";
-
-return;
-}
-
-document.getElementById("log")
-.innerHTML = log;
-
-updateUI();
-}
+/* =========================
+   PLAYER ACTION
+========================= */
 
 function afterPlayerAction(log){
 
-closeItemArea();
+    closeItemArea();
 
-if(enemy.hp <= 0){
+    if(enemy.hp <= 0){
 
-enemy.hp = 0;
+        enemy.hp = 0;
 
-updateUI();
+        updateUI();
 
-if(floor === 30){
+        if(floor === 30){
 
-document.getElementById("log")
-.innerHTML =
-"魔王討伐完了！";
+            document.getElementById("log")
+            .innerHTML =
+            "魔王討伐完了！";
 
-document.getElementById("attackBtn")
-.style.display = "none";
+            document.getElementById("attackBtn")
+            .style.display = "none";
 
-document.getElementById("itemBtn")
-.style.display = "none";
+            document.getElementById("itemBtn")
+            .style.display = "none";
 
-document.getElementById("resultArea")
-.style.display = "block";
+            document.getElementById("resultArea")
+            .style.display = "block";
 
-return;
+            return;
+        }
+
+        document.getElementById("log")
+        .innerHTML =
+        log +
+        "<br>敵を撃破";
+
+        document.getElementById("attackBtn")
+        .style.display = "none";
+
+        document.getElementById("itemBtn")
+        .style.display = "none";
+
+        showChoices();
+
+        return;
+    }
+
+    enemyTurn(log);
 }
 
-document.getElementById("log")
-.innerHTML =
-log + "<br>敵を撃破";
-
-document.getElementById("attackBtn")
-.style.display = "none";
-
-document.getElementById("itemBtn")
-.style.display = "none";
-
-showChoices();
-
-return;
-}
-
-enemyTurn(log);
-}
-
-function toggleItems(){
-
-const area =
-document.getElementById("itemArea");
-
-if(area.style.display === "none"){
-area.style.display = "block";
-}
-else{
-area.style.display = "none";
-}
-}
+/* =========================
+   ITEMS
+========================= */
 
 function usePotion(){
 
-closeItemArea();
+    closeItemArea();
 
-if(inventory.potion <= 0){
+    if(inventory.potion <= 0){
 
-document.getElementById("log")
-.innerHTML = "回復薬がない";
+        document.getElementById("log")
+        .innerHTML =
+        "回復薬がない";
 
-return;
-}
+        return;
+    }
 
-inventory.potion--;
+    inventory.potion--;
 
-player.hp += 10;
+    player.hp += 10;
 
-if(player.hp > player.maxHp){
-player.hp = player.maxHp;
-}
+    if(player.hp > player.maxHp){
 
-updateUI();
+        player.hp =
+        player.maxHp;
+    }
 
-afterPlayerAction(
-"回復薬使用 HP+10"
-);
+    updateUI();
+
+    afterPlayerAction(
+    "回復薬使用 HP+10"
+    );
 }
 
 function useBomb(){
 
-closeItemArea();
+    closeItemArea();
 
-if(inventory.bomb <= 0){
+    if(inventory.bomb <= 0){
 
-document.getElementById("log")
-.innerHTML = "爆薬がない";
+        document.getElementById("log")
+        .innerHTML =
+        "爆薬がない";
 
-return;
+        return;
+    }
+
+    inventory.bomb--;
+
+    enemy.hp -= 10;
+
+    updateUI();
+
+    afterPlayerAction(
+    "爆薬使用 10ダメージ"
+    );
 }
 
-inventory.bomb--;
-
-enemy.hp -= 10;
-
-updateUI();
-
-afterPlayerAction(
-"爆薬使用 10ダメージ"
-);
-}
+/* =========================
+   CHOICE
+========================= */
 
 function showChoices(){
 
-const area =
-document.getElementById("choiceArea");
+    const area =
+    document.getElementById("choiceArea");
 
-area.innerHTML = "";
+    area.innerHTML = "";
 
-let choices = [];
+    let choices = [];
 
-while(choices.length < 2){
+    while(choices.length < 2){
 
-let random =
-eventPool[
-Math.floor(
-Math.random()*eventPool.length
-)
-];
+        let random =
+        eventPool[
+        Math.floor(
+        Math.random()
+        * eventPool.length
+        )
+        ];
 
-if(!choices.includes(random)){
-choices.push(random);
+        if(!choices.includes(random)){
+
+            choices.push(random);
+        }
+    }
+
+    choices.forEach(choice => {
+
+        let btn =
+        document.createElement("button");
+
+        if(choice === "growth"){
+
+            btn.innerText = "成長";
+
+            btn.onclick =
+            growthEvent;
+        }
+
+        if(choice === "rest"){
+
+            btn.innerText = "休息";
+
+            btn.onclick =
+            restEvent;
+        }
+
+        if(choice === "gather"){
+
+            btn.innerText = "採取";
+
+            btn.onclick =
+            gatherEvent;
+        }
+
+        if(choice === "time"){
+
+            btn.innerText = "時巡り";
+
+            btn.onclick =
+            timeEvent;
+        }
+
+        area.appendChild(btn);
+    });
+
+    area.style.display =
+    "block";
 }
-}
 
-choices.forEach(choice => {
-
-let btn =
-document.createElement("button");
-
-if(choice === "growth"){
-btn.innerText = "成長";
-btn.onclick = growthEvent;
-}
-
-if(choice === "rest"){
-btn.innerText = "休息";
-btn.onclick = restEvent;
-}
-
-if(choice === "gather"){
-btn.innerText = "採取";
-btn.onclick = gatherEvent;
-}
-
-if(choice === "time"){
-btn.innerText = "時巡り";
-btn.onclick = timeEvent;
-}
-
-area.appendChild(btn);
-
-});
-
-area.style.display = "block";
-}
+/* =========================
+   GROWTH
+========================= */
 
 function growthEvent(){
 
-const area =
-document.getElementById("choiceArea");
+    const area =
+    document.getElementById("choiceArea");
 
-area.innerHTML = `
-<button onclick="upgrade('atk')">
-攻撃+2
-</button>
+    area.innerHTML =
+    `
+    <button onclick="upgrade('atk')">
+    攻撃+2
+    </button>
 
-<button onclick="upgrade('hp')">
-HP+10
-</button>
+    <button onclick="upgrade('hp')">
+    HP+10
+    </button>
 
-<button onclick="upgrade('crit')">
-CRT+10%
-</button>
-`;
+    <button onclick="upgrade('crit')">
+    CRT+10%
+    </button>
+    `;
 }
 
 function upgrade(type){
 
-if(type === "atk"){
-player.atk += 2;
+    if(type === "atk"){
+
+        player.atk += 2;
+    }
+
+    if(type === "hp"){
+
+        player.maxHp += 10;
+
+        player.hp += 10;
+    }
+
+    if(type === "crit"){
+
+        player.crit += 10;
+    }
+
+    nextFloor("能力強化");
 }
 
-if(type === "hp"){
-
-player.maxHp += 10;
-player.hp += 10;
-}
-
-if(type === "crit"){
-player.crit += 10;
-}
-
-nextFloor("能力強化");
-}
+/* =========================
+   REST
+========================= */
 
 function restEvent(){
 
-let heal =
-Math.floor(player.maxHp * 0.8);
+    let heal =
+    Math.floor(
+    player.maxHp * 0.8
+    );
 
-player.hp += heal;
+    player.hp += heal;
 
-if(player.hp > player.maxHp){
-player.hp = player.maxHp;
+    if(player.hp > player.maxHp){
+
+        player.hp =
+        player.maxHp;
+    }
+
+    nextFloor(
+    `休息 HP+${heal}`
+    );
 }
 
-nextFloor(
-`休息 HP+${heal}`
-);
-}
+/* =========================
+   GATHER
+========================= */
 
 function gatherEvent(){
 
-let rand = Math.random();
+    let rand =
+    Math.random();
 
-let text = "";
+    let text = "";
 
-if(rand < 0.35){
+    if(rand < 0.35){
 
-inventory.potion++;
+        inventory.potion++;
 
-text = "回復薬発見";
+        text =
+        "回復薬発見";
+    }
+    else if(rand < 0.6){
+
+        inventory.bomb++;
+
+        text =
+        "爆薬発見";
+    }
+    else{
+
+        let equipmentList =
+        Math.random() < 0.5
+        ? weapons
+        : armors;
+
+        let roll =
+        Math.random() * 100;
+
+        let selected = null;
+
+        let total = 0;
+
+        for(let equip of equipmentList){
+
+            total += equip.rate;
+
+            if(roll <= total){
+
+                selected = equip;
+
+                break;
+            }
+        }
+
+        if(selected){
+
+            if(equipmentList
+            === weapons){
+
+                if(selected.power >
+                player.weapon.power){
+
+                    player.atk +=
+                    selected.power
+                    - player.weapon.power;
+
+                    player.weapon =
+                    selected;
+
+                    text =
+                    `${selected.name}装備`;
+                }
+                else{
+
+                    text =
+                    `${selected.name}発見`;
+                }
+            }
+            else{
+
+                if(selected.power >
+                player.armor.power){
+
+                    player.def +=
+                    selected.power
+                    - player.armor.power;
+
+                    player.armor =
+                    selected;
+
+                    text =
+                    `${selected.name}装備`;
+                }
+                else{
+
+                    text =
+                    `${selected.name}発見`;
+                }
+            }
+        }
+    }
+
+    nextFloor(text);
 }
-else if(rand < 0.6){
 
-inventory.bomb++;
-
-text = "爆薬発見";
-}
-else{
-
-let equipmentList =
-Math.random() < 0.5
-? weapons
-: armors;
-
-let roll =
-Math.random() * 100;
-
-let selected = null;
-
-let total = 0;
-
-for(let equip of equipmentList){
-
-total += equip.rate;
-
-if(roll <= total){
-
-selected = equip;
-
-break;
-}
-}
-
-if(selected){
-
-if(equipmentList === weapons){
-
-if(selected.power >
-player.weapon.power){
-
-player.atk +=
-selected.power
-- player.weapon.power;
-
-player.weapon = selected;
-
-text =
-`${selected.name}装備`;
-}
-else{
-
-text =
-`${selected.name}発見`;
-}
-}
-else{
-
-if(selected.power >
-player.armor.power){
-
-player.def +=
-selected.power
-- player.armor.power;
-
-player.armor = selected;
-
-text =
-`${selected.name}装備`;
-}
-else{
-
-text =
-`${selected.name}発見`;
-}
-}
-}
-}
-
-nextFloor(text);
-}
+/* =========================
+   TIME
+========================= */
 
 function timeEvent(){
 
-floor -= 5;
+    floor -= 5;
 
-if(floor < 1){
-floor = 1;
+    if(floor < 1){
+        floor = 1;
+    }
+
+    player.hp =
+    player.maxHp;
+
+    document.getElementById("choiceArea")
+    .style.display = "none";
+
+    closeItemArea();
+
+    document.getElementById("attackBtn")
+    .style.display = "block";
+
+    document.getElementById("itemBtn")
+    .style.display = "block";
+
+    createEnemy();
+
+    document.getElementById("log")
+    .innerHTML =
+    "時が巻き戻る";
+
+    updateUI();
 }
 
-player.hp = player.maxHp;
-
-document.getElementById("choiceArea")
-.style.display = "none";
-
-closeItemArea();
-
-document.getElementById("attackBtn")
-.style.display = "block";
-
-document.getElementById("itemBtn")
-.style.display = "block";
-
-createEnemy();
-
-document.getElementById("log")
-.innerHTML =
-"時が巻き戻る";
-
-updateUI();
-}
+/* =========================
+   NEXT FLOOR
+========================= */
 
 function nextFloor(message){
 
-floor++;
+    floor++;
 
-document.getElementById("choiceArea")
-.style.display = "none";
+    document.getElementById("choiceArea")
+    .style.display = "none";
 
-closeItemArea();
+    closeItemArea();
 
-document.getElementById("attackBtn")
-.style.display = "block";
+    document.getElementById("attackBtn")
+    .style.display = "block";
 
-document.getElementById("itemBtn")
-.style.display = "block";
+    document.getElementById("itemBtn")
+    .style.display = "block";
 
-createEnemy();
+    createEnemy();
 
-document.getElementById("log")
-.innerHTML = message;
+    document.getElementById("log")
+    .innerHTML =
+    message;
 }
+
+/* =========================
+   SPRITE
+========================= */
 
 function drawSprites(){
 
@@ -1061,3 +1290,88 @@ fill="#996633"/>
 <rect x="48" y="28"
 width="4"
 height="24"
+fill="#cccccc"/>
+
+<rect x="22" y="56"
+width="6"
+height="8"
+fill="#888"/>
+
+<rect x="36" y="56"
+width="6"
+height="8"
+fill="#888"/>
+
+</svg>
+
+</div>
+`;
+
+let color = "#33cc33";
+
+if(enemy.name === "ゴブリン"){
+color = "#88cc22";
+}
+
+if(enemy.name === "オーク"){
+color = "#559933";
+}
+
+if(enemy.name === "骸骨兵"){
+color = "#dddddd";
+}
+
+if(enemy.name === "ドラゴン"){
+color = "#cc3333";
+}
+
+if(enemy.name === "魔王"){
+color = "#9933cc";
+}
+
+document.getElementById("enemySprite")
+.innerHTML = `
+<div class="sprite">
+
+<svg viewBox="0 0 64 64">
+
+<rect x="18" y="10"
+width="28"
+height="18"
+fill="${color}"/>
+
+<rect x="24" y="18"
+width="4"
+height="4"
+fill="#fff"/>
+
+<rect x="36" y="18"
+width="4"
+height="4"
+fill="#fff"/>
+
+<rect x="16" y="30"
+width="32"
+height="22"
+fill="${color}"/>
+
+<rect x="20" y="52"
+width="6"
+height="10"
+fill="${color}"/>
+
+<rect x="38" y="52"
+width="6"
+height="10"
+fill="${color}"/>
+
+</svg>
+
+</div>
+`;
+}
+
+</script>
+
+</body>
+</html>
