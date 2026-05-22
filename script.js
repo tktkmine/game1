@@ -14,6 +14,8 @@ let enemy;
 
 let currentChoices = [];
 
+let previousScene = "menu";
+
 const enemyNames = [
 "スライム",
 "ゴブリン",
@@ -30,6 +32,22 @@ const eventPool = [
 "rest",
 "gather",
 "time"
+];
+
+const weapons = [
+
+{name:"木の剣", power:1},
+{name:"鉄の剣", power:2},
+{name:"鋼の剣", power:3},
+{name:"伝説の剣", power:4}
+];
+
+const armors = [
+
+{name:"木の鎧", power:1},
+{name:"鉄の鎧", power:2},
+{name:"鋼の鎧", power:3},
+{name:"伝説の鎧", power:4}
 ];
 
 /* =========================
@@ -62,9 +80,15 @@ helpScene.style.display = "flex";
 
 if(gameScene.style.display !== "none"){
 
-gameScene.dataset.open = "true";
+previousScene = "game";
 
 gameScene.style.display = "none";
+}
+else{
+
+previousScene = "menu";
+
+menuScene.style.display = "none";
 }
 }
 
@@ -72,7 +96,7 @@ function closeHelp(){
 
 helpScene.style.display = "none";
 
-if(gameScene.dataset.open === "true"){
+if(previousScene === "game"){
 
 gameScene.style.display = "flex";
 }
@@ -97,7 +121,17 @@ hp:30,
 
 atk:10,
 def:0,
-crit:10
+crit:10,
+
+weapon:{
+name:"なし",
+power:0
+},
+
+armor:{
+name:"なし",
+power:0
+}
 };
 
 inventory = {
@@ -124,12 +158,12 @@ closeItemArea();
 
 createEnemy();
 
-document.getElementById("log")
-.innerHTML =
-"ダンジョンへ潜入した。<br>何を行う？";
-
 showGame();
 }
+
+/* =========================
+MENU
+========================= */
 
 function returnToMenu(){
 
@@ -229,7 +263,8 @@ drawSprites();
 
 document.getElementById("log")
 .innerHTML =
-`${enemy.name}が現れた。<br>何を行う？`;
+`${enemy.name}が現れた。<br>
+何を行う？`;
 }
 
 /* =========================
@@ -271,15 +306,28 @@ document.getElementById("inventory")
 爆薬 ×${inventory.bomb}
 `;
 
+document.getElementById("equipment")
+.innerHTML =
+`
+武器：${player.weapon.name}<br>
+防具：${player.armor.name}
+`;
+
 document.getElementById("playerHpBar")
 .style.width =
-(player.hp / player.maxHp * 100)
-+ "%";
+Math.max(
+0,
+(player.hp / player.maxHp)
+* 100
+) + "%";
 
 document.getElementById("enemyHpBar")
 .style.width =
-(enemy.hp / enemy.maxHp * 100)
-+ "%";
+Math.max(
+0,
+(enemy.hp / enemy.maxHp)
+* 100
+) + "%";
 }
 
 /* =========================
@@ -649,7 +697,9 @@ Math.random();
 
 let text = "";
 
-if(rand < 0.5){
+if(rand < 0.3){
+
+if(Math.random() < 0.5){
 
 inventory.potion++;
 
@@ -662,6 +712,68 @@ inventory.bomb++;
 
 text =
 "爆薬発見";
+}
+}
+else{
+
+if(Math.random() < 0.5){
+
+let selected =
+weapons[
+Math.floor(
+Math.random()
+* weapons.length
+)
+];
+
+if(selected.power >
+player.weapon.power){
+
+player.weapon =
+selected;
+
+player.atk =
+10 + selected.power;
+
+text =
+`より強い武器を手に入れた！<br>
+${selected.name}装備`;
+}
+else{
+
+text =
+"今の武器より弱いようだ";
+}
+}
+else{
+
+let selected =
+armors[
+Math.floor(
+Math.random()
+* armors.length
+)
+];
+
+if(selected.power >
+player.armor.power){
+
+player.armor =
+selected;
+
+player.def =
+selected.power;
+
+text =
+`より強い防具を手に入れた！<br>
+${selected.name}装備`;
+}
+else{
+
+text =
+"今の防具より弱いようだ";
+}
+}
 }
 
 nextFloor(text);
