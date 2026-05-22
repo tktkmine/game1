@@ -10,7 +10,7 @@ content="width=device-width,
 initial-scale=1.0,
 user-scalable=no">
 
-<title>30階層の魔王 Ver2.0</title>
+<title>30階層の魔王 Ver2.2</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -40,9 +40,103 @@ onclick="startGame()">
 
 </button>
 
+<button onclick="openHelp()">
+ヘルプ / 図鑑
+</button>
+
 <div class="version">
-Ver2.0
+Ver2.2
 </div>
+
+</div>
+
+</div>
+
+<!-- HELP -->
+
+<div id="helpScene" class="scene">
+
+<div class="panel help-panel">
+
+<h2>ヘルプ / 図鑑</h2>
+
+<div class="help-scroll">
+
+<h3>■ 行動説明</h3>
+
+<p>
+【成長】<br>
+能力を強化する
+</p>
+
+<p>
+【休息】<br>
+最大HPの80%回復
+</p>
+
+<p>
+【採取】<br>
+アイテムを発見する
+</p>
+
+<p>
+【時巡り】<br>
+5階層戻る代わりにHP全快
+</p>
+
+<h3>■ アイテム図鑑</h3>
+
+<p>
+回復薬<br>
+HPを20回復
+</p>
+
+<p>
+爆薬<br>
+敵へ20ダメージ
+</p>
+
+<h3>■ 武器図鑑</h3>
+
+<p>
+木の剣 ATK+1
+</p>
+
+<p>
+鉄の剣 ATK+2
+</p>
+
+<p>
+鋼の剣 ATK+3
+</p>
+
+<p>
+伝説の剣 ATK+4
+</p>
+
+<h3>■ 防具図鑑</h3>
+
+<p>
+木の鎧 DEF+1
+</p>
+
+<p>
+鉄の鎧 DEF+2
+</p>
+
+<p>
+鋼の鎧 DEF+3
+</p>
+
+<p>
+伝説の鎧 DEF+4
+</p>
+
+</div>
+
+<button onclick="closeHelp()">
+戻る
+</button>
 
 </div>
 
@@ -58,15 +152,30 @@ Ver2.0
 1階層
 </div>
 
+<button class="help-btn"
+onclick="openHelp()">
+
+？
+
+</button>
+
 </div>
 
-<!-- BATTLE -->
-
 <div class="panel battle-area">
+
+<!-- PLAYER -->
 
 <div class="character-box">
 
 <div id="playerSprite"></div>
+
+<div class="hpbar">
+
+<div id="playerHpBar"
+class="hpfill">
+</div>
+
+</div>
 
 <div class="status-mini"
 id="playerStats">
@@ -74,9 +183,19 @@ id="playerStats">
 
 </div>
 
+<!-- ENEMY -->
+
 <div class="character-box">
 
 <div id="enemySprite"></div>
+
+<div class="hpbar">
+
+<div id="enemyHpBar"
+class="hpfill enemy">
+</div>
+
+</div>
 
 <div class="status-mini">
 
@@ -92,17 +211,7 @@ id="enemyName">
 
 </div>
 
-<!-- INFO -->
-
 <div class="panel info-area">
-
-<div class="info-box">
-
-⚔ 装備<br><br>
-
-<div id="equipment"></div>
-
-</div>
 
 <div class="info-box">
 
@@ -116,16 +225,12 @@ id="inventory">
 
 </div>
 
-<!-- LOG -->
-
 <div class="panel log"
 id="log">
 
 ダンジョンへ潜入した。
 
 </div>
-
-<!-- BUTTON -->
 
 <div class="bottom-area">
 
@@ -144,8 +249,6 @@ onclick="toggleItems()">
 
 </button>
 
-<!-- ITEM -->
-
 <div id="itemArea"
 style="display:none;">
 
@@ -163,14 +266,10 @@ style="display:none;">
 
 </div>
 
-<!-- CHOICE -->
-
 <div id="choiceArea"
 class="choice"
 style="display:none;">
 </div>
-
-<!-- RESULT -->
 
 <div id="resultArea"
 style="display:none;">
