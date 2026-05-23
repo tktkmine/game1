@@ -31,7 +31,8 @@ const eventPool = [
 "growth",
 "rest",
 "gather",
-"time"
+"time",
+"chaos"
 ];
 
 const weapons = [
@@ -265,6 +266,27 @@ document.getElementById("log")
 .innerHTML =
 `${enemy.name}が現れた。<br>
 何を行う？`;
+}
+
+function spawnTimeKeeper(){
+
+enemy = {
+
+name:"時の番人",
+
+maxHp:120,
+hp:120,
+
+atk:22,
+
+def:5,
+
+crit:25
+};
+
+updateUI();
+
+drawSprites();
 }
 
 /* =========================
@@ -607,6 +629,14 @@ btn.onclick =
 timeEvent;
 }
 
+if(choice === "chaos"){
+
+btn.innerText = "時空の渦";
+
+btn.onclick =
+chaosEvent;
+}
+
 area.appendChild(btn);
 });
 
@@ -634,7 +664,7 @@ HP+10
 </button>
 
 <button onclick="upgrade('crit')">
-CRT+10%
+CRT+5%
 </button>
 
 <button onclick="showChoices()">
@@ -656,7 +686,7 @@ player.hp += 10;
 }
 
 if(type === "crit"){
-player.crit += 10;
+player.crit += 5;
 }
 
 nextFloor("能力強化");
@@ -697,7 +727,7 @@ Math.random();
 
 let text = "";
 
-if(rand < 0.3){
+if(rand < 0.5){
 
 if(Math.random() < 0.5){
 
@@ -805,6 +835,20 @@ document.getElementById("attackBtn")
 document.getElementById("itemBtn")
 .style.display = "block";
 
+if(Math.random() < 0.05){
+
+spawnTimeKeeper();
+
+document.getElementById("log")
+.innerHTML =
+`
+時巡り失敗…<br>
+時の番人が現れた！
+`;
+
+return;
+}
+
 createEnemy();
 
 updateUI();
@@ -812,6 +856,95 @@ updateUI();
 document.getElementById("log")
 .innerHTML =
 "時が巻き戻る<br>何を行う？";
+}
+
+/* =========================
+CHAOS
+========================= */
+
+function chaosEvent(){
+
+let rand =
+Math.floor(
+Math.random() * 5
+);
+
+if(rand === 0){
+
+let move =
+Math.floor(
+Math.random() * 11
+) - 5;
+
+floor += move;
+
+if(floor < 1){
+floor = 1;
+}
+
+createEnemy();
+
+document.getElementById("log")
+.innerHTML =
+`
+時空が歪む…<br>
+${move}階移動した<br>
+何を行う？
+`;
+
+return;
+}
+
+if(rand === 1){
+
+player.atk += 5;
+
+nextFloor(
+"未来を経験した<br>ATK+5"
+);
+
+return;
+}
+
+if(rand === 2){
+
+player.atk -= 5;
+
+if(player.atk < 1){
+player.atk = 1;
+}
+
+nextFloor(
+"老化した…<br>ATK-5"
+);
+
+return;
+}
+
+if(rand === 3){
+
+spawnTimeKeeper();
+
+document.getElementById("log")
+.innerHTML =
+`
+時の番人が現れた！<br>
+何を行う？
+`;
+
+return;
+}
+
+if(rand === 4){
+
+inventory.bomb += 2;
+
+nextFloor(
+"爆薬庫を発見<br>爆薬+2"
+);
+
+return;
+}
 }
 
 /* =========================
@@ -905,6 +1038,10 @@ color = "#cc3333";
 
 if(enemy.name === "魔王"){
 color = "#9933cc";
+}
+
+if(enemy.name === "時の番人"){
+color = "#00bcd4";
 }
 
 document.getElementById("enemySprite")
