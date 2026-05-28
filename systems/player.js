@@ -35,7 +35,7 @@ export function setPlayerName({
 }
 
 /* =====================
-   所属世界設定
+   所属世界変更
 ===================== */
 
 export function setPlayerWorld({
@@ -53,10 +53,23 @@ export function setPlayerWorld({
 }
 
 /* =====================
+   ゴールド取得
+===================== */
+
+export function getGold(
+
+  playerData
+
+) {
+
+  return playerData.gold;
+}
+
+/* =====================
    ゴールド追加
 ===================== */
 
-export function addGold({
+export function addPlayerGold({
 
   playerData,
 
@@ -73,7 +86,7 @@ export function addGold({
    ゴールド消費
 ===================== */
 
-export function useGold({
+export function consumeGold({
 
   playerData,
 
@@ -84,7 +97,11 @@ export function useGold({
   /* 不足 */
 
   if (
-    playerData.gold < amount
+
+    playerData.gold
+    <
+    amount
+
   ) {
 
     return false;
@@ -98,26 +115,36 @@ export function useGold({
 }
 
 /* =====================
-   モンスター所持確認
+   コレクション取得
 ===================== */
 
-export function hasMonster({
+export function getCollection(
 
-  playerData,
+  playerData
 
-  monsterId
+) {
 
-}) {
-
-  return playerData.collection
-    .includes(monsterId);
+  return playerData.collection;
 }
 
 /* =====================
-   モンスター追加
+   パーティ取得
 ===================== */
 
-export function addMonster({
+export function getParty(
+
+  playerData
+
+) {
+
+  return playerData.party;
+}
+
+/* =====================
+   パーティ追加
+===================== */
+
+export function addPartyMonster({
 
   playerData,
 
@@ -125,25 +152,63 @@ export function addMonster({
 
 }) {
 
-  /* 重複防止 */
+  /* 重複 */
 
   if (
-    hasMonster({
 
-      playerData,
-
+    playerData.party.includes(
       monsterId
+    )
 
-    })
   ) {
 
     return false;
   }
 
-  playerData.collection
-    .push(monsterId);
+  /* 最大3 */
+
+  if (
+
+    playerData.party.length
+    >=
+    3
+
+  ) {
+
+    return false;
+  }
+
+  playerData.party.push(
+    monsterId
+  );
 
   saveGame(playerData);
 
   return true;
+}
+
+/* =====================
+   パーティ解除
+===================== */
+
+export function removePartyMonster({
+
+  playerData,
+
+  monsterId
+
+}) {
+
+  playerData.party =
+
+    playerData.party.filter(
+      (id) => {
+
+        return (
+          id !== monsterId
+        );
+      }
+    );
+
+  saveGame(playerData);
 }
