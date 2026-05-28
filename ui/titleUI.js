@@ -1,43 +1,12 @@
-/* =====================
-   タイトル表示
-===================== */
+export function initializeTitle({ onStart }) {
+  const btn = document.getElementById("start-btn");
 
-export function showTitle() {
+  if (!btn) {
+    console.error("start-btn が見つからない");
+    return;
+  }
 
-  document.getElementById(
-    "title-screen"
-  ).classList.add(
-    "active"
-  );
-}
-
-/* =====================
-   タイトル非表示
-===================== */
-
-export function hideTitle() {
-
-  document.getElementById(
-    "title-screen"
-  ).classList.remove(
-    "active"
-  );
-}
-
-/* =====================
-   スタートボタン初期化
-===================== */
-
-export function initializeTitle({
-
-  onStart
-
-}) {
-
-  document.getElementById(
-    "start-btn"
-  ).onclick = () => {
-
+  btn.onclick = () => {
     onStart();
   };
 }
@@ -47,45 +16,33 @@ export function initializeTitle({
 ===================== */
 
 export function playTitleEffect() {
+  const title = document.getElementById("game-title");
 
-  const title =
-
-    document.getElementById(
-      "game-title"
-    );
+  if (!title) return;
 
   title.animate(
-
     [
-
-      {
-
-        transform:
-          "scale(1)"
-      },
-
-      {
-
-        transform:
-          "scale(1.05)"
-      },
-
-      {
-
-        transform:
-          "scale(1)"
-      }
-
+      { transform: "scale(1)" },
+      { transform: "scale(1.05)" },
+      { transform: "scale(1)" }
     ],
-
     {
-
       duration: 2000,
-
-      iterations:
-        Infinity
-
+      iterations: Infinity
     }
-
   );
+}
+
+/* =====================
+   画面制御（互換用）
+===================== */
+
+export function showTitle() {
+  const screen = document.getElementById("title-screen");
+  if (screen) screen.classList.add("active");
+}
+
+export function hideTitle() {
+  const screen = document.getElementById("title-screen");
+  if (screen) screen.classList.remove("active");
 }
