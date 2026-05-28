@@ -1,53 +1,48 @@
 /* =====================
-   画面切り替え
+   メニュー表示
 ===================== */
 
-export function switchScreen(
+export function showMenu() {
 
-  hideScreenId,
-
-  showScreenId
-
-) {
-
-  const hideScreen =
-    document.getElementById(
-      hideScreenId
-    );
-
-  const showScreen =
-    document.getElementById(
-      showScreenId
-    );
-
-  /* 非表示 */
-
-  hideScreen.style.display =
-    "none";
-
-  /* 表示 */
-
-  showScreen.style.display =
-    "block";
+  document.getElementById(
+    "menu-screen"
+  ).classList.add(
+    "active"
+  );
 }
 
 /* =====================
-   メニュー生成
+   メニュー非表示
+===================== */
+
+export function hideMenu() {
+
+  document.getElementById(
+    "menu-screen"
+  ).classList.remove(
+    "active"
+  );
+}
+
+/* =====================
+   メニューボタン初期化
 ===================== */
 
 export function initializeMenu({
 
   onBattle,
 
-  onOnline,
+  onGacha,
 
-  onPractice,
+  onHome,
 
-  onHome
+  onCollection
 
 }) {
 
-  /* AI対戦 */
+  /* =====================
+     モンスターテイム
+  ===================== */
 
   document.getElementById(
     "menu-battle"
@@ -56,25 +51,20 @@ export function initializeMenu({
     onBattle();
   };
 
-  /* 領土争奪戦 */
+  /* =====================
+     ガチャ
+  ===================== */
 
   document.getElementById(
-    "menu-online"
+    "menu-gacha"
   ).onclick = () => {
 
-    onOnline();
+    onGacha();
   };
 
-  /* 練習試合 */
-
-  document.getElementById(
-    "menu-practice"
-  ).onclick = () => {
-
-    onPractice();
-  };
-
-  /* マイホーム */
+  /* =====================
+     マイホーム
+  ===================== */
 
   document.getElementById(
     "menu-home"
@@ -82,31 +72,37 @@ export function initializeMenu({
 
     onHome();
   };
+
+  /* =====================
+     図鑑
+  ===================== */
+
+  document.getElementById(
+    "menu-collection"
+  ).onclick = () => {
+
+    onCollection();
+  };
 }
 
 /* =====================
-   タイトル表示
+   画面切り替え
 ===================== */
 
-export function setTitle(
+export function hideAllScreens() {
 
-  titleId,
+  const screens =
 
-  subtitleId,
+    document.querySelectorAll(
+      ".screen"
+    );
 
-  title,
+  screens.forEach(
+    (screen) => {
 
-  subtitle
-
-) {
-
-  document.getElementById(
-    titleId
-  ).textContent =
-    title;
-
-  document.getElementById(
-    subtitleId
-  ).textContent =
-    subtitle;
+      screen.classList.remove(
+        "active"
+      );
+    }
+  );
 }
