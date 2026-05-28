@@ -13,22 +13,26 @@ export function createNewSave() {
 
   return {
 
-    playerName: "プレイヤー",
+    playerName:
+      "プレイヤー",
 
-    world: null,
+    world:
+      "fire",
 
-    gold: 1000,
+    gold:
+      1000,
 
-    collection: [],
+    collection: [
 
-    party: [],
+      "fire_c_1"
 
-    settings: {
+    ],
 
-      bgm: true,
+    party: [
 
-      se: true
-    }
+      "fire_c_1"
+
+    ]
   };
 }
 
@@ -36,14 +40,19 @@ export function createNewSave() {
    セーブ
 ===================== */
 
-export function saveGame(data) {
+export function saveGame(
 
-  const json =
-    JSON.stringify(data);
+  saveData
+
+) {
 
   localStorage.setItem(
+
     SAVE_KEY,
-    json
+
+    JSON.stringify(
+      saveData
+    )
   );
 }
 
@@ -53,20 +62,27 @@ export function saveGame(data) {
 
 export function loadGame() {
 
-  const saveData =
+  const rawData =
 
     localStorage.getItem(
       SAVE_KEY
     );
 
-  /* セーブ無し */
+  /* 初回 */
 
-  if (!saveData) {
+  if (!rawData) {
 
-    return createNewSave();
+    const newSave =
+      createNewSave();
+
+    saveGame(newSave);
+
+    return newSave;
   }
 
-  return JSON.parse(saveData);
+  return JSON.parse(
+    rawData
+  );
 }
 
 /* =====================
@@ -81,10 +97,27 @@ export function deleteSave() {
 }
 
 /* =====================
-   所持追加
+   ゴールド追加
 ===================== */
 
-export function addMonsterToCollection({
+export function addGold({
+
+  saveData,
+
+  amount
+
+}) {
+
+  saveData.gold += amount;
+
+  saveGame(saveData);
+}
+
+/* =====================
+   モンスター追加
+===================== */
+
+export function addMonster({
 
   saveData,
 
@@ -92,11 +125,26 @@ export function addMonsterToCollection({
 
 }) {
 
+  /* 重複防止 */
+
+  if (
+
+    saveData.collection.includes(
+      monsterId
+    )
+
+  ) {
+
+    return false;
+  }
+
   saveData.collection.push(
     monsterId
   );
 
   saveGame(saveData);
+
+  return true;
 }
 
 /* =====================
