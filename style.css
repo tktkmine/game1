@@ -1,182 +1,456 @@
+/* =====================
+   全体
+===================== */
+
 * {
+
+  margin: 0;
+
+  padding: 0;
+
   box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
 
-  background: #111827;
-  color: white;
+  background:
+    #111827;
+
+  color:
+    #f3f4f6;
+
+  font-family:
+    sans-serif;
+
+  min-height:
+    100vh;
+
+  overflow-x:
+    hidden;
 }
 
-#app {
-  max-width: 480px;
+/* =====================
+   画面
+===================== */
 
-  margin: 0 auto;
+.screen {
+
+  display: none;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: flex-start;
 
   min-height: 100vh;
 
-  padding: 16px;
+  padding: 24px;
 }
 
-/* ===== ヘッダー ===== */
+.screen.active {
 
-header {
-  text-align: center;
-
-  margin-bottom: 20px;
+  display: flex;
 }
 
-h1 {
-  margin: 0;
+/* =====================
+   タイトル
+===================== */
 
-  color: #f59e0b;
+#title-screen {
+
+  justify-content: center;
+
+  gap: 24px;
+}
+
+#game-title {
+
+  font-size: 48px;
+
+  color:
+    #60a5fa;
+
+  text-shadow:
+    0 0 12px
+    rgba(96,165,250,0.7);
 }
 
 .subtitle {
-  color: #9ca3af;
+
+  opacity: 0.8;
+
+  text-align: center;
 }
 
-/* ===== モンスター ===== */
+/* =====================
+   ボタン
+===================== */
 
-.monster {
-  background: #1f2937;
+button {
 
-  padding: 16px;
+  border: none;
 
   border-radius: 12px;
 
-  margin-bottom: 16px;
+  padding:
+    14px 20px;
+
+  background:
+    #2563eb;
+
+  color:
+    white;
+
+  font-size:
+    16px;
+
+  cursor:
+    pointer;
+
+  transition:
+    0.2s;
 }
 
-.rank {
-  display: inline-block;
+button:hover {
 
-  background: #7c3aed;
+  transform:
+    scale(1.03);
 
-  padding: 4px 10px;
-
-  border-radius: 8px;
-
-  margin-bottom: 8px;
+  background:
+    #3b82f6;
 }
 
-/* ===== HPバー ===== */
+/* =====================
+   メニュー
+===================== */
+
+.menu-buttons {
+
+  width: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 16px;
+
+  margin-top: 24px;
+}
+
+/* =====================
+   バトル
+===================== */
+
+.battle-card {
+
+  width: 100%;
+
+  max-width: 420px;
+
+  background:
+    #1f2937;
+
+  border-radius:
+    16px;
+
+  padding:
+    16px;
+
+  margin-bottom:
+    20px;
+
+  box-shadow:
+    0 0 12px
+    rgba(0,0,0,0.4);
+}
+
+.enemy {
+
+  border:
+    2px solid
+    #ef4444;
+}
 
 .hp-bar {
+
   width: 100%;
 
   height: 18px;
 
-  background: #374151;
+  background:
+    #374151;
 
-  border-radius: 10px;
+  border-radius:
+    999px;
 
-  overflow: hidden;
+  overflow:
+    hidden;
+
+  margin-top:
+    12px;
 }
 
 .hp-fill {
+
+  width: 100%;
+
   height: 100%;
 
+  background:
+    #22c55e;
+
+  transition:
+    0.3s;
+}
+
+.enemy-fill {
+
+  background:
+    #ef4444;
+}
+
+/* =====================
+   ゲージ
+===================== */
+
+.gauge-wrapper {
+
   width: 100%;
 
-  background: #22c55e;
-
-  transition: width 0.3s;
-}
-
-/* ===== 説明文 ===== */
-
-.description {
-  color: #d1d5db;
-
-  font-size: 14px;
-}
-
-/* ===== ゲージ ===== */
-
-.gauge-section {
-  text-align: center;
-
-  margin-bottom: 20px;
-}
-
-.gauge-container {
-  width: 100%;
+  max-width: 420px;
 
   height: 24px;
 
-  background: #374151;
+  background:
+    #374151;
 
-  border-radius: 12px;
+  border-radius:
+    999px;
 
-  overflow: hidden;
+  overflow:
+    hidden;
 
-  margin-bottom: 12px;
+  margin-top:
+    20px;
 }
 
-#gauge-bar {
+.gauge-bar {
+
   width: 0%;
 
   height: 100%;
 
   background:
     linear-gradient(
-      to right,
-      #3b82f6,
+      90deg,
+      #22c55e,
+      #eab308,
       #ef4444
     );
 }
 
-/* ===== ボタン ===== */
+/* =====================
+   倍率
+===================== */
 
-button {
-  background: #2563eb;
+#multiplier-text {
 
-  color: white;
+  margin-top:
+    12px;
 
-  border: none;
+  font-size:
+    18px;
 
-  padding: 12px 18px;
-
-  border-radius: 10px;
-
-  font-size: 16px;
-
-  margin: 6px;
-
-  cursor: pointer;
+  font-weight:
+    bold;
 }
 
-button:hover {
-  opacity: 0.9;
-}
-
-/* ===== アクション ===== */
-
-.actions {
-  text-align: center;
-
-  margin-bottom: 20px;
-}
-
-/* ===== ログ ===== */
-
-.log {
-  background: #1f2937;
-
-  border-radius: 12px;
-
-  padding: 12px;
-}
+/* =====================
+   バトルログ
+===================== */
 
 #battle-log {
-  height: 160px;
 
-  overflow-y: auto;
+  width: 100%;
 
-  color: #d1d5db;
+  max-width: 420px;
 
-  font-size: 14px;
+  min-height:
+    120px;
+
+  background:
+    #1f2937;
+
+  border-radius:
+    16px;
+
+  padding:
+    12px;
+
+  margin-top:
+    20px;
+
+  overflow-y:
+    auto;
+}
+
+/* =====================
+   ガチャ
+===================== */
+
+.gacha-result {
+
+  width: 100%;
+
+  max-width: 420px;
+
+  background:
+    #1f2937;
+
+  border-radius:
+    16px;
+
+  padding:
+    20px;
+
+  margin-top:
+    24px;
+
+  text-align:
+    center;
+}
+
+/* =====================
+   レア演出
+===================== */
+
+.rare-effect {
+
+  animation:
+    rareFlash
+    1s;
+}
+
+@keyframes rareFlash {
+
+  0% {
+
+    background:
+      #111827;
+  }
+
+  50% {
+
+    background:
+      #7c3aed;
+  }
+
+  100% {
+
+    background:
+      #111827;
+  }
+}
+
+/* =====================
+   ホーム
+===================== */
+
+#party-container {
+
+  width: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+
+  margin-top:
+    16px;
+}
+
+.party-card {
+
+  background:
+    #1f2937;
+
+  border-radius:
+    12px;
+
+  padding:
+    12px;
+}
+
+/* =====================
+   図鑑
+===================== */
+
+.collection-list {
+
+  width: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 16px;
+
+  margin-top:
+    24px;
+}
+
+.monster-card {
+
+  background:
+    #1f2937;
+
+  border-radius:
+    16px;
+
+  padding:
+    16px;
+
+  box-shadow:
+    0 0 8px
+    rgba(0,0,0,0.4);
+}
+
+.monster-rank {
+
+  display:
+    inline-block;
+
+  padding:
+    4px 10px;
+
+  border-radius:
+    999px;
+
+  background:
+    #2563eb;
+
+  margin-bottom:
+    10px;
+}
+
+/* =====================
+   スマホ最適化
+===================== */
+
+@media (
+  max-width: 600px
+) {
+
+  #game-title {
+
+    font-size:
+      36px;
+  }
+
+  button {
+
+    width: 100%;
+  }
 }
