@@ -1,44 +1,39 @@
 /* =====================
-   プレイヤー情報表示
+   ホーム描画
 ===================== */
 
-export function renderPlayerInfo({
+export function renderHome({
 
-  playerData
-
-}) {
-
-  /* 名前 */
-
-  document.getElementById(
-    "home-player-name"
-  ).textContent =
-    playerData.playerName;
-
-  /* 所属世界 */
-
-  document.getElementById(
-    "home-player-world"
-  ).textContent =
-    playerData.world;
-
-  /* ゴールド */
-
-  document.getElementById(
-    "home-player-gold"
-  ).textContent =
-    `${playerData.gold} G`;
-}
-
-/* =====================
-   パーティ表示
-===================== */
-
-export function renderParty({
+  playerData,
 
   partyMonsters
 
 }) {
+
+  /* プレイヤー情報 */
+
+  document.getElementById(
+    "home-player-name"
+  ).textContent =
+
+    `名前:
+     ${playerData.playerName}`;
+
+  document.getElementById(
+    "home-player-world"
+  ).textContent =
+
+    `所属世界:
+     ${playerData.world}`;
+
+  document.getElementById(
+    "home-player-gold"
+  ).textContent =
+
+    `所持ゴールド:
+     ${playerData.gold}G`;
+
+  /* パーティ */
 
   const container =
 
@@ -46,13 +41,7 @@ export function renderParty({
       "party-container"
     );
 
-  /* 初期化 */
-
   container.innerHTML = "";
-
-  /* =====================
-     描画
-  ===================== */
 
   partyMonsters.forEach(
     (monster) => {
@@ -67,17 +56,40 @@ export function renderParty({
 
       card.innerHTML = `
 
+        <div class="monster-rank">
+
+          ${monster.rank.toUpperCase()}
+
+        </div>
+
         <h3>
+
           ${monster.name}
+
         </h3>
 
         <p>
-          Rank:
-          ${monster.rank}
+
+          ${monster.world}
+
         </p>
 
         <p>
-          ${monster.world}
+
+          HP:
+          ${monster.hp}
+
+          / ATK:
+          ${monster.atk}
+        </p>
+
+        <p>
+
+          DEF:
+          ${monster.def}
+
+          / SPD:
+          ${monster.spd}
         </p>
 
       `;
@@ -93,78 +105,24 @@ export function renderParty({
    ホーム表示
 ===================== */
 
-export function showHome(
-
-  screenId
-
-) {
+export function showHomeScreen() {
 
   document.getElementById(
-    screenId
-  ).style.display =
-    "block";
+    "home-screen"
+  ).classList.add(
+    "active"
+  );
 }
 
 /* =====================
    ホーム非表示
 ===================== */
 
-export function hideHome(
-
-  screenId
-
-) {
+export function hideHomeScreen() {
 
   document.getElementById(
-    screenId
-  ).style.display =
-    "none";
-}
-
-/* =====================
-   ボタン初期化
-===================== */
-
-export function initializeHomeButtons({
-
-  collectionButtonId,
-
-  gachaButtonId,
-
-  battleButtonId,
-
-  onCollection,
-
-  onGacha,
-
-  onBattle
-
-}) {
-
-  /* 図鑑 */
-
-  document.getElementById(
-    collectionButtonId
-  ).onclick = () => {
-
-    onCollection();
-  };
-
-  /* ガチャ */
-
-  document.getElementById(
-    gachaButtonId
-  ).onclick = () => {
-
-    onGacha();
-  };
-
-  /* バトル */
-
-  document.getElementById(
-    battleButtonId
-  ).onclick = () => {
-
-    onBattle();
-  };
+    "home-screen"
+  ).classList.remove(
+      "active"
+    );
 }
