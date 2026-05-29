@@ -26,7 +26,7 @@
 <body>
 
   <!-- =====================
-       タイトル画面
+       タイトル
   ====================== -->
 
   <section
@@ -49,7 +49,7 @@
   </section>
 
   <!-- =====================
-       メニュー画面
+       メニュー
   ====================== -->
 
   <section
@@ -68,32 +68,24 @@
       <button id="menu-tame">
 
         モンスターテイム
-        <br>
-        (AIバトル)
 
       </button>
 
       <button id="menu-territory">
 
         領土争奪戦
-        <br>
-        (オンライン対戦)
 
       </button>
 
       <button id="menu-training">
 
         トレーニングバトル
-        <br>
-        (オンライン対戦)
 
       </button>
 
       <button id="menu-home">
 
         マイホーム
-        <br>
-        (パートナー選択 / コレクション)
 
       </button>
 
@@ -116,11 +108,105 @@
 
     </h2>
 
-    <p>
+    <!-- 敵 -->
 
-      AIバトル画面（仮）
+    <div class="monster-panel enemy-panel">
 
-    </p>
+      <h3 id="enemy-name">
+
+        フレイムウルフ
+
+      </h3>
+
+      <p class="monster-rank">
+
+        Rank B
+
+      </p>
+
+      <div class="hp-bar">
+
+        <div
+          id="enemy-hp-fill"
+          class="hp-fill"
+        ></div>
+
+      </div>
+
+      <p id="enemy-hp-text">
+
+        HP 100 / 100
+
+      </p>
+
+    </div>
+
+    <!-- ゲージ -->
+
+    <div class="gauge-wrapper">
+
+      <div id="gauge-container">
+
+        <div id="gauge-bar"></div>
+
+      </div>
+
+      <p id="gauge-text">
+
+        x1.0
+
+      </p>
+
+    </div>
+
+    <!-- STOP -->
+
+    <button id="stop-btn">
+
+      STOP
+
+    </button>
+
+    <!-- プレイヤー -->
+
+    <div class="monster-panel player-panel">
+
+      <h3 id="player-name">
+
+        アクアナイト
+
+      </h3>
+
+      <p class="monster-rank">
+
+        Rank A
+
+      </p>
+
+      <div class="hp-bar">
+
+        <div
+          id="player-hp-fill"
+          class="hp-fill"
+        ></div>
+
+      </div>
+
+      <p id="player-hp-text">
+
+        HP 120 / 120
+
+      </p>
+
+    </div>
+
+    <!-- ログ -->
+
+    <div id="battle-log">
+
+      戦闘開始！
+
+    </div>
 
     <button class="back-btn">
 
@@ -147,7 +233,7 @@
 
     <p>
 
-      オンライン対戦（未実装）
+      未実装
 
     </p>
 
@@ -176,7 +262,7 @@
 
     <p>
 
-      オンライン対戦（未実装）
+      未実装
 
     </p>
 
@@ -189,7 +275,7 @@
   </section>
 
   <!-- =====================
-       マイホーム
+       ホーム
   ====================== -->
 
   <section
