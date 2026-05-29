@@ -1,277 +1,175 @@
-<!DOCTYPE html>
-<html lang="ja">
+/* =====================
+   要素取得
+===================== */
+
+const screens = {
+
+  title:
+    document.getElementById(
+      "title-screen"
+    ),
+
+  menu:
+    document.getElementById(
+      "menu-screen"
+    ),
+
+  tame:
+    document.getElementById(
+      "tame-screen"
+    ),
+
+  territory:
+    document.getElementById(
+      "territory-screen"
+    ),
+
+  training:
+    document.getElementById(
+      "training-screen"
+    ),
+
+  home:
+    document.getElementById(
+      "home-screen"
+    )
+};
+
+/* =====================
+   画面切り替え
+===================== */
+
+function hideAllScreens() {
+
+  Object.values(screens)
+    .forEach(screen => {
+
+      screen.classList.remove(
+        "active"
+      );
+    });
+}
+
+function showScreen(screen) {
+
+  hideAllScreens();
+
+  screen.classList.add(
+    "active"
+  );
+}
+
+/* =====================
+   タイトル
+===================== */
+
+const startBtn =
+  document.getElementById(
+    "start-btn"
+  );
+
+startBtn.onclick = () => {
 
-<head>
+  showScreen(
+    screens.menu
+  );
+};
 
-  <meta charset="UTF-8" />
+/* =====================
+   メニュー
+===================== */
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+document.getElementById(
+  "menu-tame"
+).onclick = () => {
 
-  <title>幻界大戦</title>
+  showScreen(
+    screens.tame
+  );
+};
 
-  <link
-    rel="stylesheet"
-    href="./style.css"
-  />
+document.getElementById(
+  "menu-territory"
+).onclick = () => {
 
-</head>
+  showScreen(
+    screens.territory
+  );
+};
 
-<body>
+document.getElementById(
+  "menu-training"
+).onclick = () => {
 
-  <!-- =====================
-       タイトル
-  ====================== -->
+  showScreen(
+    screens.training
+  );
+};
 
-  <section
-    id="title-screen"
-    class="screen active"
-  >
+document.getElementById(
+  "menu-home"
+).onclick = () => {
 
-    <h1 id="game-title">
+  showScreen(
+    screens.home
+  );
+};
 
-      幻界大戦
+/* =====================
+   戻るボタン
+===================== */
 
-    </h1>
+const backButtons =
+  document.querySelectorAll(
+    ".back-btn"
+  );
 
-    <button id="start-btn">
+backButtons.forEach(button => {
 
-      GAME START
+  button.onclick = () => {
 
-    </button>
+    showScreen(
+      screens.menu
+    );
+  };
+});
 
-  </section>
+/* =====================
+   タイトル演出
+===================== */
 
-  <!-- =====================
-       メニュー
-  ====================== -->
+const gameTitle =
+  document.querySelector(
+    ".game-title"
+  );
 
-  <section
-    id="menu-screen"
-    class="screen"
-  >
+gameTitle.animate(
 
-    <h2>
+  [
 
-      メインメニュー
+    {
+      transform:
+        "scale(1)"
+    },
 
-    </h2>
+    {
+      transform:
+        "scale(1.05)"
+    },
 
-    <button id="menu-battle">
+    {
+      transform:
+        "scale(1)"
+    }
 
-      モンスターテイム
+  ],
 
-    </button>
+  {
 
-    <button id="menu-gacha">
+    duration: 2000,
 
-      ガチャ
+    iterations:
+      Infinity
 
-    </button>
-
-    <button id="menu-home">
-
-      マイホーム
-
-    </button>
-
-    <button id="menu-collection">
-
-      図鑑
-
-    </button>
-
-  </section>
-
-  <!-- =====================
-       バトル
-  ====================== -->
-
-  <section
-    id="battle-screen"
-    class="screen"
-  >
-
-    <h2>
-
-      バトル
-
-    </h2>
-
-    <!-- 敵 -->
-
-    <div>
-
-      <h3 id="enemy-name"></h3>
-
-      <p id="enemy-rank"></p>
-
-      <p id="enemy-desc"></p>
-
-      <div class="hp-bar">
-
-        <div
-          id="enemy-hp-fill"
-          class="hp-fill"
-        ></div>
-
-      </div>
-
-      <p id="enemy-hp-text"></p>
-
-    </div>
-
-    <!-- プレイヤー -->
-
-    <div>
-
-      <h3 id="player-name"></h3>
-
-      <p id="player-rank"></p>
-
-      <p id="player-desc"></p>
-
-      <div class="hp-bar">
-
-        <div
-          id="player-hp-fill"
-          class="hp-fill"
-        ></div>
-
-      </div>
-
-      <p id="player-hp-text"></p>
-
-    </div>
-
-    <!-- ゲージ -->
-
-    <div id="gauge-container">
-
-      <div id="gauge-bar"></div>
-
-    </div>
-
-    <p id="multiplier-text">
-
-      倍率: x1.0
-
-    </p>
-
-    <button id="stop-btn">
-
-      STOP
-
-    </button>
-
-    <button id="battle-back-btn">
-
-      戻る
-
-    </button>
-
-    <div id="battle-log"></div>
-
-  </section>
-
-  <!-- =====================
-       ガチャ
-  ====================== -->
-
-  <section
-    id="gacha-screen"
-    class="screen"
-  >
-
-    <h2>
-
-      ガチャ
-
-    </h2>
-
-    <button id="gacha-btn">
-
-      ガチャを引く
-
-    </button>
-
-    <button id="gacha-back-btn">
-
-      戻る
-
-    </button>
-
-    <div id="gacha-result"></div>
-
-  </section>
-
-  <!-- =====================
-       ホーム
-  ====================== -->
-
-  <section
-    id="home-screen"
-    class="screen"
-  >
-
-    <h2>
-
-      マイホーム
-
-    </h2>
-
-    <p id="home-player-name"></p>
-
-    <p id="home-player-world"></p>
-
-    <p id="home-player-gold"></p>
-
-    <div id="party-container"></div>
-
-    <button id="home-back-btn">
-
-      戻る
-
-    </button>
-
-  </section>
-
-  <!-- =====================
-       図鑑
-  ====================== -->
-
-  <section
-    id="collection-screen"
-    class="screen"
-  >
-
-    <h2>
-
-      モンスター図鑑
-
-    </h2>
-
-    <div id="collection-list"></div>
-
-    <button id="collection-back-btn">
-
-      戻る
-
-    </button>
-
-  </section>
-
-  <!-- =====================
-       app.js
-  ====================== -->
-
-  <script
-    type="module"
-    src="./app.js"
-  ></script>
-
-</body>
-
-</html>
+  }
+);
