@@ -1,164 +1,116 @@
 /* =====================
-   HP表示更新
+   バトルログ
 ===================== */
 
-export function updateHpUI({
+export function setBattleLog(
 
-  player,
+  message
 
-  enemy
+) {
+
+  const battleLog =
+    document.getElementById(
+      "battle-log"
+    );
+
+  battleLog.innerHTML =
+    message;
+}
+
+/* =====================
+   HP更新
+===================== */
+
+export function updateHpBar({
+
+  target,
+
+  currentHp,
+
+  maxHp
 
 }) {
 
-  /* プレイヤー */
+  const fill =
+    document.getElementById(
+      `${target}-hp-fill`
+    );
 
-  const playerPercent =
+  const text =
+    document.getElementById(
+      `${target}-hp-text`
+    );
 
-    (player.currentHp
-      / player.hp)
-    * 100;
+  const percent =
 
-  document.getElementById(
-    "player-hp-fill"
-  ).style.width =
-    `${playerPercent}%`;
+    Math.max(
 
-  document.getElementById(
-    "player-hp-text"
-  ).textContent =
+      0,
 
-    `${player.currentHp}
-     / ${player.hp}`;
+      (currentHp / maxHp)
+      * 100
 
-  /* 敵 */
+    );
 
-  const enemyPercent =
+  fill.style.width =
+    `${percent}%`;
 
-    (enemy.currentHp
-      / enemy.hp)
-    * 100;
+  text.textContent =
 
-  document.getElementById(
-    "enemy-hp-fill"
-  ).style.width =
-    `${enemyPercent}%`;
-
-  document.getElementById(
-    "enemy-hp-text"
-  ).textContent =
-
-    `${enemy.currentHp}
-     / ${enemy.hp}`;
+    `HP ${currentHp} / ${maxHp}`;
 }
 
 /* =====================
    モンスター表示
 ===================== */
 
-export function renderBattleMonsters({
+export function setMonsterInfo({
 
-  player,
+  target,
 
-  enemy
+  name,
+
+  rank
 
 }) {
 
-  /* プレイヤー */
-
-  document.getElementById(
-    "player-name"
-  ).textContent =
-    player.name;
-
-  document.getElementById(
-    "player-rank"
-  ).textContent =
-    `Rank:
-     ${player.rank.toUpperCase()}`;
-
-  document.getElementById(
-    "player-desc"
-  ).textContent =
-    player.description;
-
-  /* 敵 */
-
-  document.getElementById(
-    "enemy-name"
-  ).textContent =
-    enemy.name;
-
-  document.getElementById(
-    "enemy-rank"
-  ).textContent =
-    `Rank:
-     ${enemy.rank.toUpperCase()}`;
-
-  document.getElementById(
-    "enemy-desc"
-  ).textContent =
-    enemy.description;
-}
-
-/* =====================
-   ログ初期化
-===================== */
-
-export function clearBattleLog() {
-
-  document.getElementById(
-    "battle-log"
-  ).innerHTML = "";
-}
-
-/* =====================
-   ログ追加
-===================== */
-
-export function appendBattleLog(
-
-  text
-
-) {
-
-  const battleLog =
-
+  const nameElement =
     document.getElementById(
-      "battle-log"
+      `${target}-name`
     );
 
-  const log =
-    document.createElement(
-      "p"
+  nameElement.textContent =
+    name;
+
+  const panel =
+    nameElement.parentElement;
+
+  const rankElement =
+    panel.querySelector(
+      ".monster-rank"
     );
 
-  log.textContent = text;
-
-  battleLog.prepend(log);
+  rankElement.textContent =
+    `Rank ${rank}`;
 }
 
 /* =====================
-   バトル画面表示
+   STOP結果表示
 ===================== */
 
-export function showBattleScreen() {
+export function showStopResult({
 
-  document.getElementById(
-    "battle-screen"
-  ).classList.add(
-    "active"
-  );
-}
+  multiplier
 
-/* =====================
-   バトル画面非表示
-===================== */
+}) {
 
-export function hideBattleScreen() {
+  setBattleLog(
 
-  document.getElementById(
-    "battle-screen"
-  ).classList.remove(
-    "active"
+    `
+    STOP！
+    <br>
+    攻撃倍率 :
+    x${multiplier}
+    `
   );
 }
